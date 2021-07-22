@@ -1,8 +1,9 @@
 from random import randint
 
-def create_deck():
+
+def create_deck(filename):
     deck_list = []
-    with open("deck.txt") as myfile:
+    with open(filename) as myfile:
         for line in myfile:
             var, name = line.partition(" ")[::2]
             if int(var) > 1:
@@ -23,10 +24,10 @@ def create_hand(hand, deck_list):
         k -= 1
 
 
-def create_hand_multiple(multi_hand, num):
+def create_hand_multiple(multi_hand, num, filename):
     total = num * 7
     hand = []
-    deck_list = create_deck()
+    deck_list = create_deck(filename)
     create_hand(hand, deck_list)
     hand_first = []
     for a_tuple in hand:
@@ -46,11 +47,12 @@ def create_hand_multiple(multi_hand, num):
 
 if __name__ == '__main__':
     deck_stats = {}
-    iterations = 1000;
+    filename = "deck.txt"
+    iterations = 1000
     for i in range(iterations):
-        deck_stats = create_hand_multiple(deck_stats, iterations)
+        deck_stats = create_hand_multiple(deck_stats, iterations, filename)
 
-    print(len(deck_stats))
+    print("Number of Unique cards: ", len(deck_stats))
 
     for key, value in deck_stats.items():
         print(key, ' : ', value)
